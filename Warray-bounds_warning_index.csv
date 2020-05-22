@@ -1,0 +1,273 @@
+,warning_id,warning_text,ftrapv_log_count,frwapv_log_count,Wnarrowing_log_count
+0,0,"INFO: From Compiling tensorflow/core/kernels/sparse/sparse_matrix.cc [for host]:
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:193:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 80 is out of the bounds [0, 64] of object '__tmp' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/9/bits/stl_pair.h:59,
+                 from /usr/include/c++/9/bits/stl_algobase.h:64,
+                 from /usr/include/c++/9/bits/char_traits.h:39,
+                 from /usr/include/c++/9/string:40,
+                 from ./tensorflow/core/framework/variant_op_registry.h:19,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+/usr/include/c++/9/bits/move.h: In lambda function:
+/usr/include/c++/9/bits/move.h:193:11: note: '__tmp' declared here
+  193 |       _Tp __tmp = _GLIBCXX_MOVE(__a);
+      |           ^~~~~
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:193:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 112 is out of the bounds [0, 64] of object '__tmp' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/9/bits/stl_pair.h:59,
+                 from /usr/include/c++/9/bits/stl_algobase.h:64,
+                 from /usr/include/c++/9/bits/char_traits.h:39,
+                 from /usr/include/c++/9/string:40,
+                 from ./tensorflow/core/framework/variant_op_registry.h:19,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+/usr/include/c++/9/bits/move.h: In lambda function:
+/usr/include/c++/9/bits/move.h:193:11: note: '__tmp' declared here
+  193 |       _Tp __tmp = _GLIBCXX_MOVE(__a);
+      |           ^~~~~
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:193:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 144 is out of the bounds [0, 64] of object '__tmp' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/9/bits/stl_pair.h:59,
+                 from /usr/include/c++/9/bits/stl_algobase.h:64,
+                 from /usr/include/c++/9/bits/char_traits.h:39,
+                 from /usr/include/c++/9/string:40,
+                 from ./tensorflow/core/framework/variant_op_registry.h:19,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+/usr/include/c++/9/bits/move.h: In lambda function:
+/usr/include/c++/9/bits/move.h:193:11: note: '__tmp' declared here
+  193 |       _Tp __tmp = _GLIBCXX_MOVE(__a);
+      |           ^~~~~
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'tensorflow::Variant& tensorflow::Variant::operator=(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:197:5,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:194:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 80 is out of the bounds [0, 64] of object '<anonymous>' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ./tensorflow/core/framework/variant_op_registry.h:28,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+./tensorflow/core/framework/variant.h: In lambda function:
+./tensorflow/core/framework/variant.h:197:27: note: '<anonymous>' declared here
+  197 |     Variant(std::move(rhs)).swap(*this);
+      |                           ^
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'tensorflow::Variant& tensorflow::Variant::operator=(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:197:5,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:194:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 112 is out of the bounds [0, 64] of object '<anonymous>' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ./tensorflow/core/framework/variant_op_registry.h:28,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+./tensorflow/core/framework/variant.h: In lambda function:
+./tensorflow/core/framework/variant.h:197:27: note: '<anonymous>' declared here
+  197 |     Variant(std::move(rhs)).swap(*this);
+      |                           ^
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'tensorflow::Variant& tensorflow::Variant::operator=(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:197:5,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:194:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 144 is out of the bounds [0, 64] of object '<anonymous>' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ./tensorflow/core/framework/variant_op_registry.h:28,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+./tensorflow/core/framework/variant.h: In lambda function:
+./tensorflow/core/framework/variant.h:197:27: note: '<anonymous>' declared here
+  197 |     Variant(std::move(rhs)).swap(*this);
+      |                           ^
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'tensorflow::Variant& tensorflow::Variant::operator=(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:197:5,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:195:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 80 is out of the bounds [0, 64] of object '<anonymous>' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ./tensorflow/core/framework/variant_op_registry.h:28,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+./tensorflow/core/framework/variant.h: In lambda function:
+./tensorflow/core/framework/variant.h:197:27: note: '<anonymous>' declared here
+  197 |     Variant(std::move(rhs)).swap(*this);
+      |                           ^
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'tensorflow::Variant& tensorflow::Variant::operator=(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:197:5,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:195:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 112 is out of the bounds [0, 64] of object '<anonymous>' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ./tensorflow/core/framework/variant_op_registry.h:28,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+./tensorflow/core/framework/variant.h: In lambda function:
+./tensorflow/core/framework/variant.h:197:27: note: '<anonymous>' declared here
+  197 |     Variant(std::move(rhs)).swap(*this);
+      |                           ^
+In file included from /usr/include/string.h:495,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/port.h:38,
+                 from external/com_google_protobuf/src/google/protobuf/stubs/common.h:46,
+                 from external/com_google_protobuf/src/google/protobuf/io/coded_stream.h:135,
+                 from bazel-out/host/bin/tensorflow/core/framework/tensor.pb.h:23,
+                 from ./tensorflow/core/framework/variant_op_registry.h:25,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+In function 'void* memcpy(void*, const void*, size_t)',
+    inlined from 'tensorflow::TensorShapeRep::TensorShapeRep(tensorflow::TensorShapeRep&&)' at ./tensorflow/core/framework/tensor_shape.h:519:9,
+    inlined from 'tensorflow::TensorShapeBase<tensorflow::TensorShape>::TensorShapeBase(tensorflow::TensorShapeBase<tensorflow::TensorShape>&&)' at ./tensorflow/core/framework/tensor_shape.h:166:7,
+    inlined from 'tensorflow::TensorShape::TensorShape(tensorflow::TensorShape&&)' at ./tensorflow/core/framework/tensor_shape.h:300:7,
+    inlined from 'tensorflow::Tensor::Tensor(tensorflow::Tensor&&)' at ./tensorflow/core/framework/tensor.h:923:55,
+    inlined from 'tensorflow::CSRSparseMatrix::CSRSparseMatrix(tensorflow::CSRSparseMatrix&&)' at ./tensorflow/core/kernels/sparse/sparse_matrix.h:123:39,
+    inlined from 'tensorflow::Variant::Value<T>::Value(tensorflow::Variant::in_place_t, Args&& ...) [with Args = {tensorflow::CSRSparseMatrix}; T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:328:44,
+    inlined from 'void tensorflow::Variant::Value<T>::MoveInto(tensorflow::Variant::ValueInterface*) [with T = tensorflow::CSRSparseMatrix]' at ./tensorflow/core/framework/variant.h:359:7,
+    inlined from 'tensorflow::Variant::InlineValue::InlineValue(tensorflow::Variant::InlineValue&&)' at ./tensorflow/core/framework/variant.h:408:41,
+    inlined from 'tensorflow::Variant::Variant(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:534:68,
+    inlined from 'tensorflow::Variant& tensorflow::Variant::operator=(tensorflow::Variant&&)' at ./tensorflow/core/framework/variant.h:197:5,
+    inlined from 'typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = tensorflow::Variant]' at /usr/include/c++/9/bits/move.h:195:11,
+    inlined from 'tensorflow::variant_op_registry_fn_registration::UnaryVariantDecodeRegistration<T>::UnaryVariantDecodeRegistration(const string&) [with T = tensorflow::CSRSparseMatrix]::<lambda(tensorflow::Variant*)>' at ./tensorflow/core/framework/variant_op_registry.h:374:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:34:33: warning: 'void* __builtin___memcpy_chk(void*, const void*, long unsigned int, long unsigned int)' offset 144 is out of the bounds [0, 64] of object '<anonymous>' with type 'tensorflow::Variant' [-Warray-bounds]
+   34 |   return __builtin___memcpy_chk (__dest, __src, __len, __bos0 (__dest));
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ./tensorflow/core/framework/variant_op_registry.h:28,
+                 from tensorflow/core/kernels/sparse/sparse_matrix.cc:22:
+./tensorflow/core/framework/variant.h: In lambda function:
+./tensorflow/core/framework/variant.h:197:27: note: '<anonymous>' declared here
+  197 |     Variant(std::move(rhs)).swap(*this);
+      |                           ^
+",1,1,1

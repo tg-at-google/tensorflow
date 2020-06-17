@@ -1,6 +1,7 @@
 import os, json
 import subprocess
 
+#this file is a hack, it is not well engineered
 
 def can_convert_to_int(obj):
 	try:
@@ -26,45 +27,44 @@ def get_filename(filepath):
         i-=1
     return filepath[i+1:]
 
-# class SignCompareWarning():
-# 	def __init__(self, warning_id):
-# 		self.id = warning_id
-# 		self.build_file_directory =
-# 		self.build_file
-
-
 
 # forgive poorly named method
 class WarningResolveHelper:
 	def __init__(self):
 		# restore the below variable from 'info.json'
-		self.files_commited_count=None
-		self.batch_number=None
+		self.state = {
+			"warnings_resolved_count": None,
+			"batch_number": None
+		}
+
 		self.files_per_commit_threshold=16
 		self.warning_producing_files=None
 		self.terminal_flag=False
 		self.active_warning = {}
 
 		#load indexed warining producing filenames
+		self.load_warning_producing_filenames()
+		# load git commit state from 'info.json'
+		self.load_state()
+		return None
+
+	def load_warning_producing_filenames(self):
 		with open("indexed_warning_files.json",'r') as filenames:
 			self.warning_producing_files=json.load(filenames)
 			self.warning_producing_files={ int(key): self.warning_producing_files[key] for key in self.warning_producing_files }
+		return None
 
-		# load git commit state from 'info.json'
+	def load_state(self):
 		if (not os.path.isfile('info.json')):
-			self.files_commited_count=0
-			self.batch_number=1
+			self.state["warnings_resolved_count"]=0
+			self.state["batch_number"]=1
 			with open('info.json', 'w') as info_file:
-				info_file.write(json.dumps({
-					"files_commited_count": self.files_commited_count,
-					"batch_number": self.batch_number
-					})
-				)
+				info_file.write(json.dumps(self.state))
 		else:
 			with open('info.json', 'r') as info_file:
-				info = json.load(info_file)
-				self.files_commited_count=info['files_commited_count']
-				self.batch_number=info['batch_number']
+				state = json.load(info_file)
+				self.state["warnings_resolved_count"]=state['warnings_resolved_count']
+				self.state["batch_number"]=state['batch_number']
 
 		return None
 
@@ -82,7 +82,11 @@ class WarningResolveHelper:
 	def lookup_relevant_build_info(self, filepath):
 		print("You are seeing this message becuase the because the default build arguments did not succeed in producing the relevant build.")
 		print("The associated file is:\n{}".format(filepath))
+		filename = get_filename(filepath)
 		build_file_directory= input('Enter the directory of the BUILD for the above file: ')
+		if ( build_file_directory == "" ):
+			build_file_directory=filename
+
 		build_alias = input('Enter the build alias of the relevant build: ')
 
 		bazel_build_info_object = {
@@ -162,15 +166,15 @@ class WarningResolveHelper:
 		filepath = self.warning_producing_files[self.active_warning['warning_id']]
 		subprocess.run(['git','add', filepath], capture_output=True)
 
-		self.files_commited_count+=1
-		if (self.files_commited_count==self.files_per_commit_threshold):
+		self.state["warnings_resolved_count"]+=1
+		if (self.state["warnings_resolved_count"]==self.files_per_commit_threshold):
 			commit_message='[Wsign-compare] resolution, batch {}'.format(batch_number)
 			subprocess.run(['git','commit', '-m', ], capture_output=True)
 			subprocess.run(['git','push'], capture_output=True) # will break
 			#confirm success
 
-			self.batch_number+=1
-			new_branch_name = 'sign-compare-warning-fixes-batch-{}'.format(self.batch_number)
+			self.state["batch_number"]+=1
+			new_branch_name = 'sign-compare-warning-fixes-batch-{}'.format(self.state["batch_number"])
 			subprocess.run(['git','checkout' '-b', new_branch_name], capture_output=True)
 
 		self.update_file_state()
@@ -188,11 +192,8 @@ class WarningResolveHelper:
 		return None
 
 	def update_file_state(self):
-		with open('info.json', 'w') as info_file:
-			info_file.write(json.dumps({
-				"files_commited_count": self.files_commited_count,
-				"batch_number": self.batch_number
-				})
+		with open('info.json', 'w') as state_file:
+			state_file.write(json.dumps(self.state)
 			)
 		return None
 

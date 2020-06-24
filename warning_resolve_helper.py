@@ -84,9 +84,6 @@ class WarningResolveHelper:
 		print("The associated file is:\n{}".format(filepath))
 		filename = get_filename(filepath)
 		build_file_directory= input('Enter the directory of the BUILD for the above file: ')
-		if ( build_file_directory == "" ):
-			build_file_directory=filename
-
 		build_alias = input('Enter the build alias of the relevant build: ')
 
 		bazel_build_info_object = {

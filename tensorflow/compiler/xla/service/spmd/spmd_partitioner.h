@@ -243,8 +243,13 @@ class PartitionedHlo {
   // the reshard cache.
   PartitionedHlo Reshard(const HloSharding& target);
 
-  // Pads the garbage area of the output with the provided value.
-  PartitionedHlo PadWithValue(HloInstruction* pad_value) const;
+  // Pads the garbage area of the output with the provided value. Normally,
+  // unevenly partitioned dimensions are padded on the right, but this function
+  // allows specifying left-padded dimensions, which can be used during the
+  // handling of kReverse, etc.
+  PartitionedHlo PadWithValue(
+      HloInstruction* pad_value,
+      absl::Span<const int64> left_padded_dims = {}) const;
 
   // Returns the SPMD instruction.
   HloInstruction* hlo() const { return hlo_; }
@@ -263,6 +268,8 @@ class PartitionedHlo {
       const Window& window, const HloSharding& target,
       HloInstruction* pad_value, bool mask_invalid_region = true);
 
+  const PartitioningState& state() const { return state_; }
+
  private:
   // Same as Reshard except that it does not explicitly modify the reshard
   // cache, although it would indirectly modify by calling Replicate().
@@ -277,7 +284,8 @@ class PartitionedHlo {
 
   // Helper function to reshard the tensor using AllToAll (instead of the
   // default of Replicate followed by Slice).
-  PartitionedHlo ReshardWithAllToAll(const HloSharding& target) const;
+  PartitionedHlo ReshardWithAllToAll(const HloSharding& target,
+                                     int64 source_dim, int64 target_dim) const;
 
   // Helper function to reshard the tensor using CollectivePermute.
   PartitionedHlo ReshardWithCollectivePermute(const HloSharding& target) const;

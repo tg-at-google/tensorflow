@@ -1,8 +1,7 @@
 import os, json
-import subprocess
+import subprocess, webbrowser
 
 #this file is a hack, it is not well engineered
-
 def can_convert_to_int(obj):
 	try:
 		int(obj)
@@ -31,21 +30,13 @@ def get_filename(filepath):
 # forgive poorly named method
 class WarningResolveHelper:
 	def __init__(self):
-		# restore the below variable from 'info.json'
-		self.state = {
-			"warnings_resolved_count": None,
-			"batch_number": None
-		}
-
-		self.files_per_commit_threshold=16
-		self.warning_producing_files=None
 		self.terminal_flag=False
+		self.warning_producing_files = None
 		self.active_warning = {}
 
 		#load indexed warining producing filenames
 		self.load_warning_producing_filenames()
-		# load git commit state from 'info.json'
-		self.load_state()
+
 		return None
 
 	def load_warning_producing_filenames(self):
@@ -54,18 +45,15 @@ class WarningResolveHelper:
 			self.warning_producing_files={ int(key): self.warning_producing_files[key] for key in self.warning_producing_files }
 		return None
 
-	def load_state(self):
-		if (not os.path.isfile('info.json')):
-			self.state["warnings_resolved_count"]=0
-			self.state["batch_number"]=1
-			with open('info.json', 'w') as info_file:
-				info_file.write(json.dumps(self.state))
-		else:
-			with open('info.json', 'r') as info_file:
-				state = json.load(info_file)
-				self.state["warnings_resolved_count"]=state['warnings_resolved_count']
-				self.state["batch_number"]=state['batch_number']
+	def interaction_loop(self):
+		self.get_warning_id_from_user()
+		self.reproduce_warning()
 
+		# warning_id being referenced is an unresolved reference
+		while (not self.warning_resolved()):
+			self.prompt_user_resolution_action()
+
+		self.prompt_termination_option()
 		return None
 
 	def get_warning_id_from_user(self):
@@ -79,48 +67,36 @@ class WarningResolveHelper:
 		self.active_warning["warning_id"]= warning_id
 		return None
 
-	def lookup_relevant_build_info(self, filepath):
-		print("You are seeing this message becuase the because the default build arguments did not succeed in producing the relevant build.")
-		print("The associated file is:\n{}".format(filepath))
-		filename = get_filename(filepath)
-		build_file_directory= input('Enter the directory of the BUILD for the above file: ')
-		build_alias = input('Enter the build alias of the relevant build: ')
-
-		bazel_build_info_object = {
-			"build_file_directory": build_file_directory,
-			"bazel_build_argument": '//'+ build_file_directory + ":" + build_alias
-		}
-
-		return bazel_build_info_object
-
 	def reproduce_warning(self):
-		warning_reproduced=False
-
-		# of the warning producing file
 		filepath = self.warning_producing_files[self.active_warning["warning_id"]]
 		file_directory = directory_of(filepath)
 		filename = get_filename(filepath)
 
+		self.active_warning["warning_reproduction_attempts"] = 0
 		build_file_directory = file_directory
 		bazel_build_argument = None
+		warning_reproduced=False
 
 		while (not warning_reproduced):
-			if (bazel_build_argument==None):
+			if (self.active_warning["warning_reproduction_attempts"] == 0):
 				# we haven't tried using the default arugment
+				bazel_build_argument = '//'+ build_file_directory[:-1] + ":" + filename[:-3]
+			elif (self.active_warning["warning_reproduction_attempts"] == 1):
+				build_file_directory = directory_of(build_file_directory[-1]) # check if build file is located in parent directory, as commonly true
 				bazel_build_argument = '//'+ build_file_directory[:-1] + ":" + filename[:-3]
 			else:
 				# we've tried using the default argument and it failed
-				# lookup the correct build arguments
-				bazel_build_info = self.lookup_relevant_build_info(filepath)
+				# prompt user for correct build info
+				bazel_build_info = self.prompt_user_for_build_info(filepath)
 				build_file_directory= bazel_build_info['build_file_directory']
 				bazel_build_argument= bazel_build_info['bazel_build_argument']
-				# but for now this is not implemented so just terminate instead
 
 
 			# sph is short for subprocess helper
 			clear_cache_sph= subprocess.run(['rm','-rf', 'bazel-bin/'+ build_file_directory], capture_output=True)
 			print("build running, please await it's completion ( it may take a few seconds to a minute. )")
 			reproduce_warning_sph= subprocess.run(['bazel','build', bazel_build_argument], capture_output=True)
+			self.active_warning["warning_reproduction_attempts"] += 1
 
 			# sph_outstream= reproduce_warning_sph.stdout.decode('utf-8')
 			sph_errstream= reproduce_warning_sph.stderr.decode('utf-8')
@@ -131,68 +107,57 @@ class WarningResolveHelper:
 
 		self.active_warning["build_file_directory"]=build_file_directory
 		self.active_warning["bazel_build_argument"]=bazel_build_argument
-		self.active_warning["resolution_attempts"]=0
+		self.active_warning["resolution_attempts"] = 0
 		return None
 
 	def warning_resolved(self):
-		# run build again and confirm build success AND no "[-Wsign-compare]" flags
-		# present
-
-		print("build running, please await it's completion ( it may take a few seconds to a minute. )")
-		clear_cache_sph= subprocess.run(['rm','-rf', 'bazel-bin/'+ self.active_warning["build_file_directory"]], capture_output=True)
-		confirm_resolution_sph= subprocess.run(['bazel','build', self.active_warning["bazel_build_argument"]], capture_output=True)
-
-		sph_errstream= confirm_resolution_sph.stderr.decode('utf-8')
-		print( sph_errstream )
-
 		warning_resolved = False
 
-		if (confirm_resolution_sph.returncode == 0):
-			warning_resolved= ("[-Wsign-compare]" not in sph_errstream)
+		# run build again and confirm build success AND no "[-Wsign-compare]" flags
+		if ( self.active_warning["resolution_attempts"] > 0 ):
+			print("Build running, please await it's completion ( it may take a few seconds to a minute.")
+			[ print("-"*10) for i in range(5)]
+			clear_cache_sph= subprocess.run(['rm','-rf', 'bazel-bin/'+ self.active_warning["build_file_directory"]], capture_output=True)
+			confirm_resolution_sph= subprocess.run(['bazel','build', self.active_warning["bazel_build_argument"]], capture_output=True)
+
+			sph_errstream= confirm_resolution_sph.stderr.decode('utf-8')
+			print( sph_errstream )
+
+			if (confirm_resolution_sph.returncode == 0):
+				warning_resolved= ("[-Wsign-compare]" not in sph_errstream)
 
 		return warning_resolved
 
 	def prompt_user_resolution_action(self):
+		self.active_warning["resolution_attempts"] += 1
 		filepath = self.warning_producing_files[self.active_warning["warning_id"]]
 		print("!!! {}".format(filepath))
 		fix_warning_sph= subprocess.run(['gedit', filepath])
 		input("Press enter when done editing:")
 		return None
 
-	def update_git_state(self):
-		filepath = self.warning_producing_files[self.active_warning['warning_id']]
-		subprocess.run(['git','add', filepath], capture_output=True)
+	def prompt_user_for_build_info(self, filepath):
+		print("You are seeing this message becuase the because the default build arguments did not succeed in producing the relevant build.")
+		print("The associated file is:\n{}".format(filepath))
+		filename = get_filename(filepath)
 
-		self.state["warnings_resolved_count"]+=1
-		if (self.state["warnings_resolved_count"]==self.files_per_commit_threshold):
-			commit_message='[Wsign-compare] resolution, batch {}'.format(batch_number)
-			subprocess.run(['git','commit', '-m', ], capture_output=True)
-			subprocess.run(['git','push'], capture_output=True) # will break
-			#confirm success
+		help_page_url = "https://cs.opensource.google/search?q=" + filename + "%20&ss=tensorflow%2Ftensorflow"
+		webbrowser.open(help_page_url)
+		build_file_directory= input('Enter the directory of the BUILD for the above file: ')
 
-			self.state["batch_number"]+=1
-			new_branch_name = 'sign-compare-warning-fixes-batch-{}'.format(self.state["batch_number"])
-			subprocess.run(['git','checkout' '-b', new_branch_name], capture_output=True)
+		if ( (build_file_directory == "") or (build_file_directory == "s") ):
+			build_file_directory = directory_of(filepath)[:-1]
+		elif ( (build_file_directory == " ") or (build_file_directory == "p") ):
+			build_file_directory = directory_of( directory_of(filepath)[-1] )[:-1]
 
-		self.update_file_state()
-		return None
+		build_alias = input('Enter the build alias of the relevant build: ')
 
-	def interaction_loop(self):
-		self.get_warning_id_from_user()
-		# warning_id being referenced is an unresolved reference
-		self.reproduce_warning()
-		while (not self.warning_resolved()):
-			self.prompt_user_resolution_action()
-		self.update_git_state()
-		self.prompt_termination_option()
-		#! handlier
-		return None
+		bazel_build_info_object = {
+			"build_file_directory": build_file_directory,
+			"bazel_build_argument": '//'+ build_file_directory + ":" + build_alias
+		}
 
-	def update_file_state(self):
-		with open('info.json', 'w') as state_file:
-			state_file.write(json.dumps(self.state)
-			)
-		return None
+		return bazel_build_info_object
 
 	def prompt_termination_option(self):
 		if ( input("Terminate Session? [Y/.]") == 'Y' ):

@@ -130,6 +130,19 @@ Status SetPerCoreArgShapes(
 
 }  // namespace
 
+CompileOpImplFactory* CompileOpImplFactory::factory_ = nullptr;
+
+/* static */
+CompileOpImplFactory* CompileOpImplFactory::Get() { return factory_; }
+
+/* static */
+void CompileOpImplFactory::Register(CompileOpImplFactory* factory) {
+  CHECK_EQ(factory_, nullptr)
+      << "CompileOpImplFactory can only be registered "
+         "once and there can only be one factory active and used.";
+  factory_ = factory;
+}
+
 Status TpuCompileOpKernelCommon::AssignReturnValueToCore(
     std::vector<tpu::ShardingAndIndex>* retval_core_mapping) {
   std::vector<int> per_core_retval_counts(metadata_.num_cores_per_replica(), 0);
@@ -377,10 +390,12 @@ Status TpuCompileOpKernelCommon::CompileTFFunctionToHlo(
             << " seconds to give time for TPUCompileOp to finished.";
   env->SleepForMicroseconds(kSleepSeconds * 1000000);
   if (done->load()) {
-    // If the TPUCompileOp has finished, then terminate peacefully.
+    // If the TpuCompileOp has finished, then terminate peacefully.
     return;
   }
 
+  LOG(ERROR) << "Aborting process due to cancelled TpuCompileOp. This "
+             << "termination is to ensure a consistent state.";
   std::exit(42);
 }
 

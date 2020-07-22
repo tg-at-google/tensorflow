@@ -3592,7 +3592,7 @@ class ConvertTileOp : public OpRewritePattern<TF::TileOp> {
         multiples.getType().getRank() != 1)
       return failure();
 
-    const int64 input_shape_size = input_shape.size();
+    const int64_t input_shape_size = input_shape.size();
     if (multiples.getNumElements() != input_shape_size) return failure();
 
     SmallVector<int64_t, 8> broadcasted_shape;

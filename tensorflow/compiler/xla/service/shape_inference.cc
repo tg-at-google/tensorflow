@@ -2565,7 +2565,7 @@ ShapeInference::InferDegenerateDimensionBroadcastShape(HloOpcode operation,
                          ShapeUtil::HumanString(operand_shape),
                          ShapeUtil::HumanString(update_shape));
 
-    const int64 = number_of_indices_int = number_of_indices;
+    const int64 number_of_indices_int = number_of_indices;
     if (operand_shape.rank() != number_of_indices_int) {
       return InvalidArgument(
           "Dynamic update slice start number of dimensions %d must match "
@@ -2892,7 +2892,7 @@ ShapeInference::InferDegenerateDimensionBroadcastShape(HloOpcode operation,
     int64 output_dim_start = -1;
     int64 output_dim_end = -1;
     // Find common_factors that the input_dim belongs to.
-    for (int64 i = 0, end = common_factors.size() - 1; i < end; ++i) {
+    for (int64 i = 0, iter_end = common_factors.size() - 1; i < iter_end; ++i) {
       auto start = common_factors[i];
       auto end = common_factors[i + 1];
       if (input_dim >= start.first && input_dim < end.first) {
